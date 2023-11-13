@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - includeAll:
+      path: ./2023/12
+      relativeToChangelogFile: true
