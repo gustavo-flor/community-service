@@ -11,14 +11,13 @@ spring:
     name: community-service
   jpa:
     open-in-view: false
-    show-sql: false
     hibernate:
       ddl-auto: none
   datasource:
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/devaneio
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
   liquibase:
     change-log: classpath:migrations/changelog.yml
 management:

@@ -6,10 +6,11 @@ public interface CreateUserUseCase {
 
     Output execute(Input input);
 
-    record Input(String email, String password) {
+    record Input(String fullName, String email, String password) {
 
         public User user() {
             return User.builder()
+                .fullName(fullName())
                 .email(email())
                 .build();
         }

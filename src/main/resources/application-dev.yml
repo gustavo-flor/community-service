@@ -1,0 +1,9 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/devaneio
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
