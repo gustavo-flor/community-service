@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import tech.devaneio.cs.core.repository.UserRepository;
+import tech.devaneio.cs.core.service.UserService;
 
 import static java.text.MessageFormat.format;
 
@@ -19,8 +19,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(final UserRepository userRepository) {
-        return username -> userRepository.findByEmail(username)
+    public UserDetailsService userDetailsService(final UserService userService) {
+        return username -> userService.findByEmail(username)
             .orElseThrow(() -> {
                 final var message = format("User not found by e-mail equals to {0}", username);
                 return new UsernameNotFoundException(message);

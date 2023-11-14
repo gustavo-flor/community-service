@@ -26,3 +26,7 @@ management:
       exposure:
         include: health
       base-path: /
+jwt:
+  signing-key: ${JWT_SIGNING_KEY}
+  signature-algorithm: ${JWT_SIGNATURE_ALGORITHM}
+  duration-in-millis: 3600000
