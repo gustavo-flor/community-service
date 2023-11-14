@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tech.devaneio.cs.core.usecase.AuthenticationUseCase;
 import tech.devaneio.cs.entrypoint.web.payload.request.LoginPayload;
-import tech.devaneio.cs.entrypoint.web.payload.response.UserPayload;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 

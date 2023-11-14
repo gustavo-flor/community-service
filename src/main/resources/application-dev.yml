@@ -2,6 +2,8 @@ spring:
   config:
     activate:
       on-profile: dev
+  jpa:
+    show-sql: true
   datasource:
     url: jdbc:postgresql://localhost:5432/devaneio
     username: postgres
