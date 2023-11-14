@@ -2,6 +2,8 @@ package tech.devaneio.cs.core.usecase;
 
 import tech.devaneio.cs.core.entity.User;
 
+import static tech.devaneio.cs.core.entity.Role.VISITOR;
+
 public interface CreateUserUseCase {
 
     Output execute(Input input);
@@ -12,6 +14,7 @@ public interface CreateUserUseCase {
             return User.builder()
                 .fullName(fullName())
                 .email(email())
+                .role(VISITOR)
                 .build();
         }
 
