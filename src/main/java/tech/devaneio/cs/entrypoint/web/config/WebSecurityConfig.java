@@ -27,7 +27,9 @@ public class WebSecurityConfig {
     private static final String[] UNAUTHENTICATED_GET_ENDPOINTS = {
         "/", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs.yaml", "/health"
     };
-    private static final String[] UNAUTHENTICATED_POST_ENDPOINTS = {};
+    private static final String[] UNAUTHENTICATED_POST_ENDPOINTS = {
+        "/v1/users"
+    };
 
     private final AuthenticationProvider authenticationProvider;
     private final AuthenticationFilter authenticationFilter;

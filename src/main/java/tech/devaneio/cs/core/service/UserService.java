@@ -1,6 +1,8 @@
 package tech.devaneio.cs.core.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import tech.devaneio.cs.core.entity.User;
 import tech.devaneio.cs.core.repository.UserRepository;
@@ -19,6 +21,10 @@ public class UserService {
 
     public Optional<User> findByEmail(final String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public Page<User> findAll(final PageRequest pageRequest) {
+        return userRepository.findAll(pageRequest);
     }
 
 }

@@ -1,6 +1,7 @@
 package tech.devaneio.cs.entrypoint.web.filter;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.impl.DefaultClaims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,8 +23,10 @@ import tech.devaneio.cs.core.service.TokenService;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Optional;
 
+import static java.text.MessageFormat.format;
 import static java.util.Objects.nonNull;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
@@ -44,7 +49,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         Optional.ofNullable(request.getHeader(AUTHORIZATION))
             .filter(it -> it.startsWith(BEARER_AUTHENTICATION_PREFIX))
             .map(it -> it.substring(BEARER_AUTHENTICATION_PREFIX.length()))
-            .map(tokenService::parseToken)
+            .map(this::parseToken)
             .filter(it -> nonNull(it.getExpiration()) && it.getExpiration().after(new Date()))
             .map(Claims::getSubject)
             .map(this::getUserByUsername)
@@ -54,6 +59,16 @@ public class AuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(it);
             });
         filterChain.doFilter(request, response);
+    }
+
+    private Claims parseToken(final String token) {
+        try {
+            return tokenService.parseToken(token);
+        } catch (RuntimeException e) {
+            final var message = format("Invalid/expired token with value equals to [{0}]", token);
+            log.debug(message, e);
+            return new DefaultClaims();
+        }
     }
 
     private UserDetails getUserByUsername(final String username) {
