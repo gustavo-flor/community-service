@@ -9,4 +9,4 @@ spring:
     driver-class-name: org.postgresql.Driver
 jwt:
   signing-key: MySigningKey
-  signature-algorithm: es256
+  signature-algorithm: hs256
