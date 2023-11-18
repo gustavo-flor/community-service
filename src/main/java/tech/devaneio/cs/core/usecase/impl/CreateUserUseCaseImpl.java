@@ -1,8 +1,10 @@
 package tech.devaneio.cs.core.usecase.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import tech.devaneio.cs.core.entity.User;
+import tech.devaneio.cs.core.exception.handler.DataIntegrityViolationExceptionHandler;
 import tech.devaneio.cs.core.mapping.UseCase;
 import tech.devaneio.cs.core.service.UserService;
 import tech.devaneio.cs.core.usecase.CreateUserUseCase;
@@ -24,7 +26,15 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
         final var user = input.user();
         final var encodedPassword = passwordEncoder.encode(input.password());
         user.setPassword(encodedPassword);
-        return userService.save(user);
+        return persist(user);
+    }
+
+    private User persist(final User user) {
+        try {
+            return userService.save(user);
+        } catch (DataIntegrityViolationException e) {
+            throw DataIntegrityViolationExceptionHandler.handle(e);
+        }
     }
 
 }

@@ -6,6 +6,14 @@ public record ErrorPayload(String message, Code code) {
         return new ErrorPayload(message, Code.INVALID_REQUEST);
     }
 
+    public static ErrorPayload conflictError(final String message) {
+        return new ErrorPayload(message, Code.CONFLICT_ERROR);
+    }
+
+    public static ErrorPayload resourceNotFound(final String message) {
+        return new ErrorPayload(message, Code.RESOURCE_NOT_FOUND);
+    }
+
     public static ErrorPayload internalServerError() {
         final var message = "Something went wrong, please try again later. Check the logs for details.";
         return new ErrorPayload(message, Code.INTERNAL_SERVER_ERROR);
@@ -14,6 +22,8 @@ public record ErrorPayload(String message, Code code) {
     enum Code {
 
         INVALID_REQUEST,
+        CONFLICT_ERROR,
+        RESOURCE_NOT_FOUND,
         INTERNAL_SERVER_ERROR
 
     }

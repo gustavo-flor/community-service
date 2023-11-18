@@ -3,12 +3,14 @@ package tech.devaneio.cs.entrypoint.web.controller.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RestController;
+import tech.devaneio.cs.core.exception.ConstraintViolationException;
 import tech.devaneio.cs.core.exception.UserNotFoundException;
 import tech.devaneio.cs.core.service.UserService;
 import tech.devaneio.cs.core.usecase.CreateUserUseCase;
 import tech.devaneio.cs.core.usecase.UpdateUserRoleUseCase;
 import tech.devaneio.cs.core.usecase.UpdateUserUseCase;
 import tech.devaneio.cs.entrypoint.web.controller.UserController;
+import tech.devaneio.cs.entrypoint.web.exception.ConflictException;
 import tech.devaneio.cs.entrypoint.web.exception.NotFoundException;
 import tech.devaneio.cs.entrypoint.web.payload.request.CreateUserPayload;
 import tech.devaneio.cs.entrypoint.web.payload.request.UpdateUserPayload;
@@ -32,9 +34,13 @@ public class UserControllerImpl implements UserController {
 
     @Override
     public UserPayload create(final CreateUserPayload payload) {
-        final var input = payload.input();
-        final var output = createUserUseCase.execute(input);
-        return UserPayload.of(output.user());
+        try {
+            final var input = payload.input();
+            final var output = createUserUseCase.execute(input);
+            return UserPayload.of(output.user());
+        } catch (ConstraintViolationException e) {
+            throw new ConflictException(e);
+        }
     }
 
     @Override

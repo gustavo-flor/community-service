@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.springframework.validation.annotation.Validated;
+import tech.devaneio.cs.core.exception.ConstraintViolationException;
 import tech.devaneio.cs.core.validator.mapping.FullName;
 import tech.devaneio.cs.core.entity.User;
 import tech.devaneio.cs.core.validator.mapping.Password;
@@ -15,7 +16,7 @@ import static tech.devaneio.cs.core.entity.Role.VISITOR;
 @Validated
 public interface CreateUserUseCase {
 
-    Output execute(@Valid @NotNull Input input);
+    Output execute(@Valid @NotNull Input input) throws ConstraintViolationException;
 
     @Builder
     record Input(@NotBlank @FullName String fullName,

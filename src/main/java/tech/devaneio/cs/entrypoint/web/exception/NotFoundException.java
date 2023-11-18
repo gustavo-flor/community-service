@@ -5,10 +5,10 @@ import tech.devaneio.cs.core.exception.ResourceNotFoundException;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-public class NotFoundException extends ResponseStatusException {
+public class NotFoundException extends RuntimeException {
 
     public NotFoundException(final ResourceNotFoundException cause) {
-        super(NOT_FOUND, cause.getMessage(), cause);
+        super(cause.getMessage(), cause);
     }
 
 }
