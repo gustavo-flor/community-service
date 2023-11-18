@@ -6,7 +6,8 @@ public record ErrorPayload(String message, Code code) {
         return new ErrorPayload(message, Code.INVALID_REQUEST);
     }
 
-    public static ErrorPayload internalServerError(final String message) {
+    public static ErrorPayload internalServerError() {
+        final var message = "Something went wrong, please try again later. Check the logs for details.";
         return new ErrorPayload(message, Code.INTERNAL_SERVER_ERROR);
     }
 

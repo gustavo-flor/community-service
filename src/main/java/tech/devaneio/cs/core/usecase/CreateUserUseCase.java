@@ -8,6 +8,7 @@ import lombok.Builder;
 import org.springframework.validation.annotation.Validated;
 import tech.devaneio.cs.core.validator.mapping.FullName;
 import tech.devaneio.cs.core.entity.User;
+import tech.devaneio.cs.core.validator.mapping.Password;
 
 import static tech.devaneio.cs.core.entity.Role.VISITOR;
 
@@ -19,7 +20,7 @@ public interface CreateUserUseCase {
     @Builder
     record Input(@NotBlank @FullName String fullName,
                  @NotBlank @Email String email,
-                 @NotBlank String password) {
+                 @NotBlank @Password String password) {
 
         public User user() {
             return User.builder()

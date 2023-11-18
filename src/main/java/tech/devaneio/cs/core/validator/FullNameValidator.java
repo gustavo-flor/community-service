@@ -18,14 +18,14 @@ public class FullNameValidator implements ConstraintValidator<FullName, String> 
     private Pattern fullNamePattern;
 
     @Override
-    public void initialize(final FullName constraintAnnotation) {
-        fullNamePattern = Pattern.compile(constraintAnnotation.regexp());
+    public void initialize(final FullName annotation) {
+        fullNamePattern = Pattern.compile(annotation.regexp());
     }
 
     @Override
-    public boolean isValid(final String input, final ConstraintValidatorContext context) {
+    public boolean isValid(final String value, final ConstraintValidatorContext context) {
         requireNonNull(fullNamePattern, "Full name pattern is null, but it's required to execute is valid");
-        return Optional.ofNullable(input)
+        return Optional.ofNullable(value)
             .map(String::trim)
             .map(StringUtil::removeAccents)
             .map(it -> fullNamePattern.matcher(it))

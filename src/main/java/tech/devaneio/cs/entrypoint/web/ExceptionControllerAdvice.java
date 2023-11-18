@@ -2,6 +2,7 @@ package tech.devaneio.cs.entrypoint.web;
 
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Path;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -12,6 +13,7 @@ import java.util.stream.StreamSupport;
 
 import static java.text.MessageFormat.format;
 
+@Slf4j
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
 
@@ -34,7 +36,8 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorPayload handle(final Exception exception) {
-        return ErrorPayload.internalServerError(exception.getMessage());
+        log.error(exception.getMessage(), exception);
+        return ErrorPayload.internalServerError();
     }
 
 }
