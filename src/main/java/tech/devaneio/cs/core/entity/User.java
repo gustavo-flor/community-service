@@ -90,4 +90,8 @@ public class User implements UserDetails {
         return true;
     }
 
+    public void merge(final User user) {
+        setFullName(user.getFullName());
+    }
+
 }
