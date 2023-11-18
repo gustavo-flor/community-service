@@ -15,7 +15,8 @@ public interface UpdateUserUseCase {
     Output execute(@Valid @NotNull Input input) throws UserNotFoundException;
 
     @Builder
-    record Input(@NotNull Long id, @NotBlank @FullName String fullName) {
+    record Input(@NotNull Long id,
+                 @NotBlank @FullName String fullName) {
 
         public User user() {
             return User.builder()

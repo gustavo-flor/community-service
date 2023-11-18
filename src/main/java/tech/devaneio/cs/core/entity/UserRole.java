@@ -3,7 +3,7 @@ package tech.devaneio.cs.core.entity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-public enum Role {
+public enum UserRole {
 
     VISITOR,
     SUBSCRIBER,

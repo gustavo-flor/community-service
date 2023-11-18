@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 2023-12-01-create-users-table
+      id: 2023-11-02-create-articles-table-01
       author: gustavo-flor
       changes:
         - createTable:
-            tableName: users
+            tableName: articles
             columns:
               - column:
                   name: id
@@ -14,26 +14,33 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: full_name
+                  name: title
                   type: varchar(255)
                   constraints:
                     nullable: false
               - column:
-                  name: email
-                  type: varchar(255)
-                  constraints:
-                    unique: true
-                    nullable: false
-              - column:
-                  name: password
+                  name: description
                   type: varchar(255)
                   constraints:
                     nullable: false
               - column:
-                  name: role
+                  name: content
+                  type: clob
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
                   type: varchar(32)
                   constraints:
                     nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: published_at
+                  type: datetime
               - column:
                   name: created_at
                   type: datetime
@@ -44,4 +51,13 @@ databaseChangeLog:
                   type: datetime
                   constraints:
                     nullable: false
-
+  - changeSet:
+      id: 2023-11-02-create-articles-table-02
+      author: gustavo-flor
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: articles
+            constraintName: fk_articles_user_id
+            referencedColumnNames: id
+            referencedTableName: users

@@ -16,7 +16,7 @@ public interface AuthenticationUseCase {
     record Input(@Email String email, @NotBlank String password) {
 
         public UsernamePasswordAuthenticationToken authentication() {
-            return new UsernamePasswordAuthenticationToken(email(), password());
+            return new UsernamePasswordAuthenticationToken(email().toLowerCase(), password());
         }
 
     }

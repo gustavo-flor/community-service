@@ -6,17 +6,17 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.springframework.validation.annotation.Validated;
-import tech.devaneio.cs.core.exception.ConstraintViolationException;
+import tech.devaneio.cs.core.exception.ConflictException;
 import tech.devaneio.cs.core.validator.mapping.FullName;
 import tech.devaneio.cs.core.entity.User;
 import tech.devaneio.cs.core.validator.mapping.Password;
 
-import static tech.devaneio.cs.core.entity.Role.VISITOR;
+import static tech.devaneio.cs.core.entity.UserRole.VISITOR;
 
 @Validated
 public interface CreateUserUseCase {
 
-    Output execute(@Valid @NotNull Input input) throws ConstraintViolationException;
+    Output execute(@Valid @NotNull Input input) throws ConflictException;
 
     @Builder
     record Input(@NotBlank @FullName String fullName,
@@ -26,7 +26,7 @@ public interface CreateUserUseCase {
         public User user() {
             return User.builder()
                 .fullName(fullName())
-                .email(email())
+                .email(email().toLowerCase())
                 .role(VISITOR)
                 .build();
         }

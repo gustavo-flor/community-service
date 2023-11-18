@@ -4,11 +4,13 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Path;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import tech.devaneio.cs.entrypoint.web.exception.ConflictException;
-import tech.devaneio.cs.entrypoint.web.exception.NotFoundException;
+import tech.devaneio.cs.core.exception.ConflictException;
+import tech.devaneio.cs.core.exception.ResourceNotFoundException;
 import tech.devaneio.cs.entrypoint.web.payload.response.ErrorPayload;
 
 import java.util.stream.StreamSupport;
@@ -41,9 +43,21 @@ public class ExceptionControllerAdvice {
         return ErrorPayload.conflictError(exception.getMessage());
     }
 
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ErrorPayload handle(final AccessDeniedException exception) {
+        return ErrorPayload.forbidden(exception.getMessage());
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorPayload handle(final BadCredentialsException exception) {
+        return ErrorPayload.unauthorized(exception.getMessage());
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorPayload handle(final NotFoundException exception) {
+    public ErrorPayload handle(final ResourceNotFoundException exception) {
         return ErrorPayload.resourceNotFound(exception.getMessage());
     }
 

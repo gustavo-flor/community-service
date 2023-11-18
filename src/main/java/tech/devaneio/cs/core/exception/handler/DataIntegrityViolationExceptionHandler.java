@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import org.postgresql.util.PSQLException;
 import org.postgresql.util.ServerErrorMessage;
 import org.springframework.dao.DataIntegrityViolationException;
-import tech.devaneio.cs.core.exception.ConstraintViolationException;
+import tech.devaneio.cs.core.exception.ConflictException;
 
 import java.util.Optional;
 
@@ -22,7 +22,7 @@ public class DataIntegrityViolationExceptionHandler {
                 final var detail = Optional.ofNullable(sqlException.getServerErrorMessage())
                     .map(ServerErrorMessage::getDetail)
                     .orElse("Unknown integrity constraint violation");
-                return new ConstraintViolationException(detail, exception);
+                return new ConflictException(detail, exception);
             }
         }
         return exception;

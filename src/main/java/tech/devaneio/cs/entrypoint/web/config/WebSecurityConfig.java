@@ -27,7 +27,9 @@ public class WebSecurityConfig {
         "/webjars/**", "/error"
     };
     private static final String[] UNAUTHENTICATED_GET_ENDPOINTS = {
-        "/", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs.yaml", "/health"
+        "/", "/swagger-ui/**", "/v3/api-docs/**", "/v3/api-docs.yaml",
+        "/health",
+        "/v1/published-articles/**"
     };
     private static final String[] UNAUTHENTICATED_POST_ENDPOINTS = {
         "/v1/auth/login", "/v1/users"
@@ -40,6 +42,9 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(final HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.cors(AbstractHttpConfigurer::disable)
             .csrf(AbstractHttpConfigurer::disable)
+            .anonymous(AbstractHttpConfigurer::disable)
+            .httpBasic(AbstractHttpConfigurer::disable)
+            .formLogin(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(this::authorizeHttpRequests)
             .sessionManagement(it -> it.sessionCreationPolicy(STATELESS))
             .authenticationProvider(authenticationProvider)
