@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import tech.devaneio.cs.core.search.ArticleSearchable;
 import tech.devaneio.cs.core.entity.Article;
-import tech.devaneio.cs.core.entity.ArticleStatus;
 import tech.devaneio.cs.core.repository.ArticleRepository;
 
 import java.util.Optional;
@@ -35,8 +35,8 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
-    public Page<Article> findAll(final PageRequest pageRequest) {
-        return articleRepository.findAll(pageRequest);
+    public Page<Article> findAll(final ArticleSearchable searchable, final PageRequest pageRequest) {
+        return articleRepository.findAll(searchable.specification(), pageRequest);
     }
 
     public Page<Article> findAllPublished(final PageRequest pageRequest) {

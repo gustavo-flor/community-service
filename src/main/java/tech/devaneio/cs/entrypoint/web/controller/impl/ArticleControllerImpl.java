@@ -10,7 +10,7 @@ import tech.devaneio.cs.entrypoint.web.controller.ArticleController;
 import tech.devaneio.cs.entrypoint.web.payload.request.CreateArticlePayload;
 import tech.devaneio.cs.entrypoint.web.payload.request.UpdateArticlePayload;
 import tech.devaneio.cs.entrypoint.web.payload.response.ArticlePayload;
-import tech.devaneio.cs.entrypoint.web.query.PageableQuery;
+import tech.devaneio.cs.entrypoint.web.query.ArticleSearchQuery;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,8 +21,8 @@ public class ArticleControllerImpl implements ArticleController {
     private final UpdateArticleUseCase updateArticleUseCase;
 
     @Override
-    public Page<ArticlePayload> findAll(final PageableQuery query) {
-        return articleService.findAll(query.pageRequest()).map(ArticlePayload::of);
+    public Page<ArticlePayload> findAll(final ArticleSearchQuery query) {
+        return articleService.findAll(query.searchable(), query.pageRequest()).map(ArticlePayload::of);
     }
 
     @Override

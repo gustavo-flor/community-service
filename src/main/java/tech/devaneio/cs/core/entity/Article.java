@@ -52,6 +52,9 @@ public class Article {
     @Column(name = "status")
     private ArticleStatus status;
 
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private Long userId;
+
     @CreatedBy
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)

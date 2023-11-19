@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import tech.devaneio.cs.entrypoint.web.payload.request.CreateArticlePayload;
 import tech.devaneio.cs.entrypoint.web.payload.request.UpdateArticlePayload;
 import tech.devaneio.cs.entrypoint.web.payload.response.ArticlePayload;
-import tech.devaneio.cs.entrypoint.web.query.PageableQuery;
+import tech.devaneio.cs.entrypoint.web.query.ArticleSearchQuery;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -24,7 +24,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public interface ArticleController {
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    Page<ArticlePayload> findAll(@Valid PageableQuery query);
+    Page<ArticlePayload> findAll(@Valid ArticleSearchQuery query);
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
