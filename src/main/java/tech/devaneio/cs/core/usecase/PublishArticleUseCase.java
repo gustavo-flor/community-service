@@ -12,7 +12,7 @@ public interface PublishArticleUseCase {
 
     Output execute(@Valid @NotNull Input input) throws ArticleNotFoundException;
 
-    record Input(@NotNull @Positive Long id) {
+    record Input(@NotNull @Positive Long id, @NotNull @Positive Long userId) {
     }
 
     record Output(Article article) {

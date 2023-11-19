@@ -2,7 +2,6 @@ package tech.devaneio.cs.entrypoint.web.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +22,6 @@ public interface PublishedArticleController {
     @GetMapping(path = "/{id}", produces = APPLICATION_JSON_VALUE)
     ArticlePayload findById(@PathVariable Long id);
 
-    @PreAuthorize("hasRole('ADMINISTRATOR')")
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     ArticlePayload publish(@RequestBody PublishArticlePayload payload);
 

@@ -22,6 +22,10 @@ public class ArticleService {
         return articleRepository.findById(id);
     }
 
+    public Optional<Article> findByIdAndUserId(final Long id, final Long userId) {
+        return articleRepository.findByIdAndUserId(id, userId);
+    }
+
     public Optional<Article> findPublishedById(final Long id) {
         return findById(id)
             .filter(Article::isPublished);

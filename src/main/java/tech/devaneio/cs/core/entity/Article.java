@@ -68,6 +68,10 @@ public class Article {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    public boolean isDraft() {
+        return status == ArticleStatus.DRAFT;
+    }
+
     public boolean isPublished() {
         return status == ArticleStatus.PUBLISHED;
     }

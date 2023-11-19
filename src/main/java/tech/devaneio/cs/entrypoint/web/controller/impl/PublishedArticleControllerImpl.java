@@ -3,6 +3,7 @@ package tech.devaneio.cs.entrypoint.web.controller.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RestController;
+import tech.devaneio.cs.core.context.AuthContext;
 import tech.devaneio.cs.core.exception.ArticleNotFoundException;
 import tech.devaneio.cs.core.service.ArticleService;
 import tech.devaneio.cs.core.usecase.PublishArticleUseCase;
@@ -32,7 +33,8 @@ public class PublishedArticleControllerImpl implements PublishedArticleControlle
 
     @Override
     public ArticlePayload publish(final PublishArticlePayload payload) {
-        final var input = payload.input();
+        final var currentUser = AuthContext.getCurrentUser().orElseThrow();
+        final var input = payload.input(currentUser.getId());
         final var output = publishArticleUseCase.execute(input);
         return ArticlePayload.of(output.article());
     }

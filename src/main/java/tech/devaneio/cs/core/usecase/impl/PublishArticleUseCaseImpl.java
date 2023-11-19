@@ -1,7 +1,9 @@
 package tech.devaneio.cs.core.usecase.impl;
 
 import lombok.RequiredArgsConstructor;
+import tech.devaneio.cs.core.entity.Article;
 import tech.devaneio.cs.core.exception.ArticleNotFoundException;
+import tech.devaneio.cs.core.exception.ConflictException;
 import tech.devaneio.cs.core.mapping.UseCase;
 import tech.devaneio.cs.core.service.ArticleService;
 import tech.devaneio.cs.core.usecase.PublishArticleUseCase;
@@ -17,7 +19,9 @@ public class PublishArticleUseCaseImpl implements PublishArticleUseCase {
 
     @Override
     public Output execute(final Input input) {
-        final var article = articleService.findById(input.id()).orElseThrow(ArticleNotFoundException::new);
+        final var article = articleService.findByIdAndUserId(input.id(), input.userId())
+            .filter(Article::isDraft)
+            .orElseThrow(() -> new ConflictException("Not found a draft article to publish, check your input"));
         article.setStatus(PUBLISHED);
         article.setPublishedAt(now());
         articleService.save(article);

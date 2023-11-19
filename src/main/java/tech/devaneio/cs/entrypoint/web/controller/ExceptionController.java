@@ -1,4 +1,4 @@
-package tech.devaneio.cs.entrypoint.web.controller.advice;
+package tech.devaneio.cs.entrypoint.web.controller;
 
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Path;
@@ -19,7 +19,7 @@ import static java.text.MessageFormat.format;
 
 @Slf4j
 @RestControllerAdvice
-public class ExceptionControllerAdvice {
+public class ExceptionController {
 
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
