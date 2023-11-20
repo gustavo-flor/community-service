@@ -4,9 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tech.devaneio.cs.core.search.ArticleSearchable;
+import tech.devaneio.cs.core.entity.ArticleStatus;
+import tech.devaneio.cs.core.search.ArticleFilterable;
+import tech.devaneio.cs.core.search.ArticleSearch;
 
+import static tech.devaneio.cs.core.entity.ArticleField.STATUS;
 import static tech.devaneio.cs.core.entity.ArticleField.USER_ID;
+import static tech.devaneio.cs.core.search.ArticleSelectable.allFields;
 
 @Getter
 @Setter
@@ -15,11 +19,17 @@ import static tech.devaneio.cs.core.entity.ArticleField.USER_ID;
 public class ArticleSearchQuery extends PageableQuery {
 
     private Long userId;
+    private ArticleStatus status;
 
-    public ArticleSearchable searchable() {
+    private ArticleFilterable filterable() {
         final var ignoreIfNull = true;
-        return new ArticleSearchable()
-            .add(USER_ID, userId, ignoreIfNull);
+        return new ArticleFilterable()
+            .filter(USER_ID, userId, ignoreIfNull)
+            .filter(STATUS, status, ignoreIfNull);
+    }
+
+    public ArticleSearch search() {
+        return new ArticleSearch(allFields(), filterable(), pageRequest());
     }
 
 }

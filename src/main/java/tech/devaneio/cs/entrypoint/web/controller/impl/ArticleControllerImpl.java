@@ -22,7 +22,7 @@ public class ArticleControllerImpl implements ArticleController {
 
     @Override
     public Page<ArticlePayload> findAll(final ArticleSearchQuery query) {
-        return articleService.findAll(query.searchable(), query.pageRequest()).map(ArticlePayload::of);
+        return articleService.findAll(query.search()).map(ArticlePayload::of);
     }
 
     @Override

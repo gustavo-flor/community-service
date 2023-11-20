@@ -5,7 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Map;
 
-public interface Searchable<T> {
+public interface Filterable<T> {
 
     Map<String, Object> filters();
 

@@ -9,16 +9,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class ArticleSearchable implements Searchable<Article> {
+public class ArticleFilterable implements Filterable<Article> {
 
     private final Map<ArticleField, Object> filters = new EnumMap<>(ArticleField.class);
 
-    public ArticleSearchable add(final ArticleField field, final Object value, final boolean ignoreIfNull) {
+    public ArticleFilterable filter(final ArticleField field, final Object value, final boolean ignoreIfNull) {
         final var shouldBeIgnored = ignoreIfNull && value == null;
-        return shouldBeIgnored ? this : add(field, value);
+        return shouldBeIgnored ? this : filter(field, value);
     }
 
-    public ArticleSearchable add(final ArticleField field, final Object value) {
+    public ArticleFilterable filter(final ArticleField field, final Object value) {
         if (field.isFilterable(value)) {
             filters.put(field, value);
             return this;

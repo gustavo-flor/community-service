@@ -12,6 +12,7 @@ public record ArticlePayload(Long id,
                              String description,
                              String content,
                              ArticleStatus status,
+                             Long userId,
                              LocalDateTime publishedAt,
                              LocalDateTime createdAt,
                              LocalDateTime updatedAt) {
@@ -26,6 +27,7 @@ public record ArticlePayload(Long id,
             .description(article.getDescription())
             .content(article.getContent())
             .status(article.getStatus())
+            .userId(article.getUserId())
             .publishedAt(article.getPublishedAt())
             .createdAt(article.getCreatedAt())
             .updatedAt(article.getUpdatedAt())

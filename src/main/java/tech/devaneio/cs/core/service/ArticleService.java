@@ -4,9 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import tech.devaneio.cs.core.search.ArticleSearchable;
+import tech.devaneio.cs.core.search.ArticleFilterable;
 import tech.devaneio.cs.core.entity.Article;
 import tech.devaneio.cs.core.repository.ArticleRepository;
+import tech.devaneio.cs.core.search.ArticleSearch;
 
 import java.util.Optional;
 
@@ -35,8 +36,8 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
-    public Page<Article> findAll(final ArticleSearchable searchable, final PageRequest pageRequest) {
-        return articleRepository.findAll(searchable.specification(), pageRequest);
+    public Page<Article> findAll(final ArticleSearch search) {
+        return articleRepository.findAll(search.specification(), search.pageable());
     }
 
     public Page<Article> findAllPublished(final PageRequest pageRequest) {
